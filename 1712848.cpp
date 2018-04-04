@@ -15,7 +15,7 @@ typedef struct sinhvien
 	wchar_t mota[1000];
 	wchar_t sothich;
 }sv;
-void nhapsv(FILE *fi, int &n,sv a[10])
+int demsv(FILE *fi, int &n)
 {
 	char ch;
 	do
@@ -26,17 +26,29 @@ void nhapsv(FILE *fi, int &n,sv a[10])
 			n++;
 		}
 	} while (ch != EOF);
-	printf("%d\n", n);
+	return n;
+}
+void docsv(FILE *fi, FILE *fo, int n)
+{
+	sinhvien a[10];
+	fseek(fi, 0, 0);
+	for (int i = 0; i < n; i++)
+	{
+		fread(a[i].MSSV, sizeof(char), 10, fi);
+		
+	}
+	fwrite(a[1].MSSV, sizeof(char), 10, fo);
 }
 void main()
 {
-	FILE *fi = fopen("sinhvien1.txt", "r+");
-	int n = 1;
-	sinhvien a[10];
+	FILE *fi = fopen("sinhvien.csv", "r");
+	FILE *fo = fopen("sinhvien.txt", "wt");
+	int n = 0;
 	if (fi != NULL)
 	{
-		nhapsv(fi,n,a);
+		int kq = demsv(fi,n);
+		docsv(fi, fo, kq);
 	}
 	else printf("Khong doc duoc file.");
-	fclose(fi);
+	fcloseall();
 }
