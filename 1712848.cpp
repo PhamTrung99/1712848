@@ -57,11 +57,11 @@ int demsothich(FILE*fi)
 }
 void sothichmoinguoi(FILE* fi, sv sv[10])
 {
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < 10; i++)
 	{
 		sv[i].demsothich = demsothich(fi);
 	}
-	rewind(fi);
+//	rewind(fi);
 }
 void luusv(FILE* fi, sv &a){
 	tachsv(fi, a.MSSV);
@@ -71,10 +71,10 @@ void luusv(FILE* fi, sv &a){
 	tachsv(fi, a.ngaysinh);
 	tachsv(fi, a.anh);
 	tachsv(fi, a.mota);
-	/*for (int i = 0; i < a.demsothich; i++)
+	for (int i = 0; i < a.demsothich; i++)
 	{
 		tachsv(fi, a.sothich[i]);
-	}*/
+	}
 }
 void main()
 {
@@ -82,15 +82,20 @@ void main()
 	_setmode(_fileno(stdin), _O_U16TEXT);
 	SINHVIEN a[10];
 	FILE *fi = _wfopen(L"sinhvien.csv", L"r, ccs=UTF-8");
-	int sosv = 2;
+	int sosv = 10;
 	if (fi != NULL)
 	{
 		//sothichmoinguoi(fi, a);
 		fseek(fi,0L,SEEK_SET);
 		for (int i = 0; i < sosv; i++)
 		{
+			int kq = demsothich(fi);
 			luusv(fi, a[i]);
 			wprintf(L"%s\n%s\n%s\n%d\n%s\n%s\n%s\n", a[i].MSSV, a[i].ten, a[i].khoa, a[i].khoatuyen, a[i].ngaysinh, a[i].anh, a[i].mota);
+			for (int j = 0; j < kq; j++)
+			{
+				wprintf(L"%s\n",a[i].sothich[i][j]);
+			}
 		}
 	}
 	else wprintf(L"Không đọc được file.");
