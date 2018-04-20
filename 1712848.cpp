@@ -55,13 +55,14 @@ int demsothich(FILE*fi)
 	}
 	return dem  - 6;
 }
-void sothichmoinguoi(FILE* fi, sv sv[10])
+void sothichmoinguoi(FILE* fi, sv sv[])
 {
 	for (int i = 0; i < 10; i++)
 	{
 		sv[i].demsothich = demsothich(fi);
+		fseek(fi, 0L, SEEK_CUR);
 	}
-//	rewind(fi);
+	rewind(fi);
 }
 void luusv(FILE* fi, sv &a){
 	tachsv(fi, a.MSSV);
@@ -85,17 +86,16 @@ void main()
 	int sosv = 10;
 	if (fi != NULL)
 	{
-		//sothichmoinguoi(fi, a);
 		fseek(fi,0L,SEEK_SET);
 		for (int i = 0; i < sosv; i++)
 		{
-			int kq = demsothich(fi);
+			a[i].demsothich = demsothich(fi);
 			luusv(fi, a[i]);
 			wprintf(L"%s\n%s\n%s\n%d\n%s\n%s\n%s\n", a[i].MSSV, a[i].ten, a[i].khoa, a[i].khoatuyen, a[i].ngaysinh, a[i].anh, a[i].mota);
-			for (int j = 0; j < kq; j++)
+			for (int j = 0; j < a[i].demsothich; j++)
 			{
-				wprintf(L"%s\n",a[i].sothich[i][j]);
-			}
+				wprintf(L"%s\n",a[i].sothich[j]);
+			}wprintf(L"\n\n");
 		}
 	}
 	else wprintf(L"Không đọc được file.");
